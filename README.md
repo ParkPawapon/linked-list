@@ -83,6 +83,18 @@ Complexity:
 - strict test gate before execution (`run.sh` / `run.ps1`)
 - explicit SDK pinning (`global.json`)
 
+## Repository Security (Enterprise Baseline)
+
+- CI workflow on push/pull request (`.github/workflows/ci.yml`)
+- CODEOWNERS policy (`.github/CODEOWNERS`)
+- security policy file (`SECURITY.md`)
+- branch protection and GitHub security settings should be enabled on `main`
+
+Important:
+
+- cloning this repository does **not** grant delete permission
+- repository deletion requires owner/admin-level permission on GitHub
+
 ## Big-O Summary
 
 - `AddTerm`: `O(n)` time, `O(1)` extra space
