@@ -1,3 +1,7 @@
+build/
+out/
 bin/
 obj/
 .DS_Store
+.idea/
+.vscode/

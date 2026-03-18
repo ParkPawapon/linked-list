@@ -1,28 +1,23 @@
-# Linked List Polynomial (Console-Only, C#)
+# Linked List Polynomial (Console-Only, Java)
 
-This project is prepared for assignment submission and local execution.
+This repository is a local console application for the polynomial linked-list assignment.
 
-There is no web UI and no API service.  
-It is a console program plus core logic and unit tests.
+There is no web UI and no API layer.
+The solution is implemented in Java with a single runtime target, a deterministic local build, automated tests, and one-command execution scripts for macOS, Linux, and Windows.
+
+## Requirements
+
+- JDK 17
+- `java` and `javac` available in `PATH`
 
 ## Project Structure
 
-- `src/LinkedList.Polynomial.Core` - polynomial linked-list implementation
-- `src/LinkedList.Polynomial.App` - console entry point
-- `tests/LinkedList.Polynomial.Tests` - unit tests
+- `src/main/java` - production code
+- `src/test/java` - test suite
+- `run.sh` - one-command local verification for macOS/Linux
+- `run.ps1` - one-command local verification for Windows PowerShell
 
-## Prerequisite
-
-- .NET SDK `9.0.305` (pinned in `global.json`)
-
-## One-Command Run (Production-Style Gate)
-
-Use these scripts to run the full local gate in one command:
-
-- `restore`
-- `build` (`Release`)
-- `test` (`Release`)
-- run console app (`Release`)
+## How To Run After Clone
 
 macOS/Linux:
 
@@ -36,25 +31,42 @@ Windows PowerShell:
 ./run.ps1
 ```
 
-Both scripts fail fast and return a non-zero exit code if any stage fails.
+Both scripts perform the same pipeline:
 
-## After Clone
+- clean build output
+- compile main sources with warnings treated as errors
+- compile test sources with warnings treated as errors
+- run tests
+- run the console demo
 
-```bash
-dotnet restore
-dotnet build
-dotnet test
-```
+If any step fails, the script exits with a non-zero code immediately.
 
-Expected test status: `Passed: 5, Failed: 0`
+## What The Program Solves
 
-## Run the Console Program
+The polynomial is stored as a singly linked list sorted by descending exponent.
+Each node stores:
 
-```bash
-dotnet run --project src/LinkedList.Polynomial.App
-```
+- coefficient
+- exponent
+- pointer to the next node
 
-Example output:
+The implementation includes:
+
+- `addTerm`
+- `add`
+- `multiply`
+- string formatting for readable polynomial output
+
+## Complexity
+
+- `addTerm`: `O(n)`
+- `add`: linear merge over the full input, which is `O(a + b)` or simply `O(n)` when `n` means the total number of input nodes
+- `multiply`: `O(a * b + k log k)`
+
+`a` and `b` are the term counts of the two input polynomials.
+`k` is the number of unique exponents in the multiplication result.
+
+## Demo Output
 
 ```text
 Linked-List Polynomial Demo
@@ -64,30 +76,11 @@ A(x)+B(x) = 2x^5 + 3x^4 + 3x^2 + 11
 A(x)*B(x) = 6x^9 - 8x^8 + 12x^7 - 7x^6 + 15x^4 + 4x^3 + 18x^2 + 30
 
 Complexity:
-- Add: O(n + m)
-- Multiply: O(n * m + k log k), where k = unique exponents in the result
+- Add: O(n) over the total number of input nodes
+- Multiply: O(a * b + k log k)
 ```
 
-## Assignment Coverage
+## Notes On Design Direction
 
-- Polynomial represented by singly linked list (sorted by exponent)
-- `AddTerm`
-- `Add`
-- `Multiply`
-- Big-O explanation in code and console output
-
-## Console-Only Enterprise Baseline
-
-- single runtime and single deployment target (`.NET`)
-- deterministic builds and warnings as errors (`Directory.Build.props`)
-- strict test gate before execution (`run.sh` / `run.ps1`)
-- explicit SDK pinning (`global.json`)
-
-## Big-O Summary
-
-- `AddTerm`: `O(n)` time, `O(1)` extra space
-- `Add`: `O(n + m)` time, `O(n + m)` output space
-- `Multiply`: `O(n * m + k log k)` time, `O(k)` extra space
-
-`k` = number of unique exponents in the result polynomial.
-# linked-list
+This project intentionally stays console-only and uses the JDK directly.
+For this assignment, that keeps the runtime surface small, removes unnecessary framework overhead, and gives the same execution flow across local machines and CI.

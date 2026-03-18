@@ -15,16 +15,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          dotnet-version: 9.0.x
+          distribution: temurin
+          java-version: '17'
 
-      - name: Restore
-        run: dotnet restore LinkedList.Polynomial.sln
-
-      - name: Build
-        run: dotnet build LinkedList.Polynomial.sln --configuration Release --no-restore
-
-      - name: Test
-        run: dotnet test LinkedList.Polynomial.sln --configuration Release --no-build
+      - name: Verify
+        run: ./run.sh
