@@ -25,10 +25,23 @@ macOS/Linux:
 ./run.sh
 ```
 
+If the shell reports `Permission denied`, run:
+
+```bash
+chmod +x ./run.sh
+./run.sh
+```
+
 Windows PowerShell:
 
 ```powershell
 ./run.ps1
+```
+
+If PowerShell blocks script execution, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\run.ps1
 ```
 
 Both scripts perform the same pipeline:
